@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#include "stdafx.h"
+#include <iostream>
 
 int main()
 {
