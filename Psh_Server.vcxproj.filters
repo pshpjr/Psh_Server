@@ -10,6 +10,9 @@
     <Filter Include="Setting">
       <UniqueIdentifier>{ac3f1dba-9a58-4387-940a-440e91a010b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{45cea2a7-3ff3-4d86-804d-a3e8e696a25b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CoreGlobal.cpp">
@@ -19,9 +22,6 @@
       <Filter>GlobalUse</Filter>
     </ClCompile>
     <ClCompile Include="Psh_Server.cpp" />
-    <ClCompile Include="SettingParser.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="CLogger.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -30,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="CSerializeBuffer.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingParser.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,9 +51,6 @@
     <ClInclude Include="CoreGlobal.h">
       <Filter>GlobalUse</Filter>
     </ClInclude>
-    <ClInclude Include="SettingParser.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="BuildSettings.h">
       <Filter>Setting</Filter>
     </ClInclude>
@@ -62,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="CSerializeBuffer.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingParser.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
