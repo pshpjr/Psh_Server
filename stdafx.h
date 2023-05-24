@@ -6,7 +6,12 @@
 #include <unordered_map>
 #include <Windows.h>
 
-
-#include "Logger.h"
+#include "BuildSettings.h"
 #include "Types.h"
+#include "Container.h"
+#include "Macro.h"
+
 #include "CoreGlobal.h"
+#include "SettingParser.h"
+#include "CLogger.h"
+#include "Profiler.h"

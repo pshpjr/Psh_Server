@@ -132,6 +132,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CoreGlobal.cpp" />
+    <ClCompile Include="CSerializeBuffer.cpp" />
+    <ClCompile Include="CLogger.cpp" />
+    <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Psh_Server.cpp" />
     <ClCompile Include="SettingParser.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -142,9 +145,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuildSettings.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="CoreGlobal.h" />
+    <ClInclude Include="CSerializeBuffer.h" />
+    <ClInclude Include="CLogger.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="Profiler.h" />
     <ClInclude Include="SettingParser.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Types.h" />

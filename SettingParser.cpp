@@ -1,8 +1,6 @@
 ﻿#include "stdafx.h"
 #include "SettingParser.h"
 
-
-
 #define WORD_START _buffer[_bufferIndex]
 #define WORD_END _buffer[wordEnd]
 
@@ -32,18 +30,18 @@ bool SettingParser::getValue(LPCTSTR name, int32& value)
 	TCHAR Group[WORD_SIZE] = {0,};
 	TCHAR Name[WORD_SIZE] = {0,};
 
-	_tcsncpy_s(Group, name, groupEnd);
-	_tcscpy_s(Name, &name[groupEnd + 1]);
+	wcsncpy_s(Group, name, groupEnd);
+	wcscpy_s(Name, &name[groupEnd + 1]);
 
 
 	for (int i = 0; i < MAXGROUPSIZE; i++)
 	{
-		if (_tcscmp(_groupsName[i], Group) == 0)
+		if (wcscmp(_groupsName[i], Group) == 0)
 		{
 			auto result = _settingsContainer[i].find(Name);
 			if (result == _settingsContainer[i].end())
 				return false;
-			value = _ttoi(result->second.c_str());
+			value = _wtoi(result->second.c_str());
 			return true;
 		}
 	}
@@ -65,18 +63,18 @@ bool SettingParser::getValue(LPCTSTR name, LPTSTR value)
 	TCHAR Group[WORD_SIZE] = { 0, };
 	TCHAR Name[WORD_SIZE] = { 0, };
 
-	_tcsncpy_s(Group, name, groupEnd);
-	_tcscpy_s(Name, &name[groupEnd + 1]);
+	wcsncpy_s(Group, name, groupEnd);
+	wcscpy_s(Name, &name[groupEnd + 1]);
 
 
 	for(int i =0; i<MAXGROUPSIZE;i++)
 	{
-		if(_tcscmp(_groupsName[i], Group) == 0)
+		if(wcscmp(_groupsName[i], Group) == 0)
 		{
 			auto result = _settingsContainer[i].find(Name);
 			if (result == _settingsContainer[i].end())
 				return false;
-			_tcscpy_s(value, WORD_SIZE, result->second.c_str());
+			wcscpy_s(value, WORD_SIZE, result->second.c_str());
 			return true;
 		}
 	}
@@ -89,10 +87,10 @@ bool SettingParser::loadSetting(LPCTSTR location)
 	TCHAR errBuffer[MAXERRLEN];
 
 	//텍스트 모드로 열 경우 ftell의 값과 파일 크기가 다를 수 있다. 
-	const auto openRet = _tfopen_s(&_settingStream, location, TEXT("rb"));
+	const auto openRet = _wfopen_s(&_settingStream, location, TEXT("rb"));
 	if (openRet != 0 || _settingStream == nullptr)
 	{
-		_stprintf_s(errBuffer, TEXT("errNo : %d | SettingParser::loadSetting, fopen "), openRet);
+		swprintf_s(errBuffer, L"errNo : %d | SettingParser::loadSetting, fopen ", openRet);
 		GLogger->write(errBuffer);
 		return false;
 	}
@@ -100,7 +98,7 @@ bool SettingParser::loadSetting(LPCTSTR location)
 	long fileSize;
 
 	if (fseek(_settingStream, 0, SEEK_END) < 0 || (fileSize = ftell(_settingStream)) < 0) {
-		_stprintf_s(errBuffer, TEXT("errNo : %d | SettingParser::loadSetting, ftell "), openRet);
+		swprintf_s(errBuffer, TEXT("errNo : %d | SettingParser::loadSetting, ftell "), openRet);
 		GLogger->write(errBuffer);
 		// should read the file and reallocate the buffer as needed
 		fclose(_settingStream);
@@ -110,7 +108,7 @@ bool SettingParser::loadSetting(LPCTSTR location)
 	_buffer = (LPTSTR)malloc(fileSize+ 1);
 	if (_buffer == nullptr)
 	{
-		_stprintf_s(errBuffer, TEXT("errNo : %d | SettingParser::loadSetting, malloc "), openRet);
+		swprintf_s(errBuffer, TEXT("errNo : %d | SettingParser::loadSetting, malloc "), openRet);
 		GLogger->write(errBuffer);
 		return false;
 	}
@@ -121,7 +119,7 @@ bool SettingParser::loadSetting(LPCTSTR location)
 	const auto readRet = fread_s(_buffer,fileSize, 1,fileSize,_settingStream);
 	if (readRet != fileSize)
 	{
-		_stprintf_s(errBuffer, TEXT("errNo : %zd | SettingParser::loadSetting, fread "), readRet);
+		swprintf_s(errBuffer, TEXT("errNo : %zd | SettingParser::loadSetting, fread "), readRet);
 		GLogger->write(errBuffer);
 		return false;
 	}
@@ -168,7 +166,7 @@ bool SettingParser::parse()
 		if(value[0] == '{')
 		{
 			_groupIndex++;
-			_tcscpy_s(_groupsName[_groupIndex], WORD_SIZE, key);
+			wcscpy_s(_groupsName[_groupIndex], WORD_SIZE, key);
 			continue;
 		}
 		_settingsContainer[_groupIndex].insert({key,value});
@@ -251,7 +249,7 @@ bool SettingParser::getTok(LPTCH  word)
 		//끝나는 " 문자열에 안 들어가게 
 		size_t wordSize = wordEnd - _bufferIndex-1;
 
-		_tcsncpy_s(word, WORD_SIZE, &WORD_START, wordSize);
+		wcsncpy_s(word, WORD_SIZE, &WORD_START, wordSize);
 		_bufferIndex = wordEnd;
 		return true;
 	}
@@ -261,7 +259,7 @@ bool SettingParser::getTok(LPTCH  word)
 	if(WORD_START == TEXT( ':') || WORD_START == TEXT('{') || WORD_START == TEXT( '}') )
 	{
 		const size_t wordSize = wordEnd - _bufferIndex;
-		_tcsncpy_s(word, WORD_SIZE, &WORD_START, wordSize);
+		wcsncpy_s(word, WORD_SIZE, &WORD_START, wordSize);
 		word[wordSize] = '\0';
 
 		_bufferIndex = wordEnd;
@@ -285,7 +283,7 @@ bool SettingParser::getTok(LPTCH  word)
 
 
 	size_t wordSize = wordEnd - _bufferIndex;
-	_tcsncpy_s(word,WORD_SIZE, &WORD_START, wordSize);
+	wcsncpy_s(word,WORD_SIZE, &WORD_START, wordSize);
 	word[wordSize] = '\0';
 
 	_bufferIndex = wordEnd;

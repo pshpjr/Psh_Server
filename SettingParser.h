@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "stdafx.h"
-
 
 /*
 	파일 형식은
@@ -53,6 +51,6 @@ private:
 	int32 _groupIndex = -1;
 	WCHAR _groupsName[MAXGROUPSIZE][WORD_SIZE] = { {0}, };
 	
-	std::unordered_map<, std::wstring> _settingsContainer[MAXGROUPSIZE];
+	HashMap<STR, STR> _settingsContainer[MAXGROUPSIZE];
 };
 

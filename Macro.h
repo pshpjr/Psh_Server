@@ -36,12 +36,12 @@ static void to_str(int num, OUT char* dest, int bufferSize)
 /*--------------------
 		Profiler
 ---------------------*/
-#define PROFILE
 
-#ifdef PROFILE
+#ifdef USEPROFILE
 #define PRO_BEGIN(TagName) ProfileItem t__COUNTER__(L#TagName);
 #else
 
 #define PRO_BEGIN(TagName)
 #define PRO_END(TagName)
 #endif
+
